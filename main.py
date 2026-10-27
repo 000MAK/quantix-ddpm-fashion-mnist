@@ -13,7 +13,7 @@ def main():
   def __init__(self):
    super().__init__(); self.time=nn.Embedding(steps,32); self.net=nn.Sequential(nn.Conv2d(33,32,3,padding=1),nn.SiLU(),nn.Conv2d(32,64,3,padding=1),nn.SiLU(),nn.Conv2d(64,64,3,padding=1),nn.SiLU(),nn.Conv2d(64,32,3,padding=1),nn.SiLU(),nn.Conv2d(32,1,3,padding=1))
   def forward(self,x,t):
-   te=self.time(t)[:,:,None,None].expand(-1,-1,28,28); return self.net(torch.cat([x,te[:,:1]],1))
+   te=self.time(t)[:,:,None,None].expand(-1,-1,28,28); return self.net(torch.cat([x,te],1))
  model=Denoiser().to(device); opt=torch.optim.Adam(model.parameters(),lr=1e-3); hist=[]
  for e in range(a.epochs):
   model.train(); losses=[]
